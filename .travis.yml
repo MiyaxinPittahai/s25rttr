@@ -18,9 +18,8 @@ before_install:
 #The "||true" at the end of some of the commands above makes sure that the build continues even if some of the lines fail (in which case they *would* return false, which *would* abort the build)
 script: 
  - cd build 
- - cmake .. 
- - make
- - make DESTDIR=/tmp/siedler install
+ - cmake -DCMAKE_INSTALL_PREFIX=/tmp/siedler .. 
+ - make all install
 after_script:
 #tar the logs and upload them to omploader; comment out the line below to disable that
  - "cd /tmp && tar czf logs.tar.gz logs/ && wget -q ompldr.org/ompload && echo 'Downloading ompload script successful.' && chmod +x ompload && ./ompload logs.tar.gz"
