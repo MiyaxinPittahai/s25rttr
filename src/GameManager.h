@@ -1,6 +1,5 @@
-// $Id: GameManager.h 7521 2011-09-08 20:45:55Z FloSoft $
-//
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
+// Copyright (c) 2013 S25RTTR-Aux/Nevik Rehnel (hai.kataker at gmx.de)
 //
 // This file is part of Return To The Roots.
 //
@@ -19,77 +18,74 @@
 #ifndef GAMEMANAGER_H_INCLUDED
 #define GAMEMANAGER_H_INCLUDED
 
-#pragma once
-
 #include "Singleton.h"
 
-// Die verschiedenen Cursor mit ihren Indizes in resource.idx
+/**
+ * Various cursors and their indices in resource.idx
+ */
 enum CursorType {
-	CURSOR_NONE,
-	CURSOR_HAND,
-	CURSOR_SCROLL     = 32,
-	CURSOR_MOON       = 33,
-	CURSOR_RM         = 34,
-	CURSOR_RM_PRESSED = 35
+    CURSOR_NONE       =  0,
+    CURSOR_HAND       =  1,
+    CURSOR_SCROLL     = 32,
+    CURSOR_MOON       = 33,
+    CURSOR_RM         = 34,
+    CURSOR_RM_PRESSED = 35
 };
 
-/// "Die" GameManager-Klasse
-class GameManager : public Singleton<GameManager>
-{
+/** 
+ * "THE" GameManager class
+ */
+class GameManager : public Singleton<GameManager> {
 public:
-	GameManager(void);
+    GameManager(void);
 
-	bool Start();
-	void Stop();
-	bool Run();
+    bool Start();
+    void Stop();
+    bool Run();
 
-	bool StartMenu();
-	bool ShowMenu();
+    bool StartMenu();
+    bool ShowMenu();
 
-	/// Average FPS Zähler zurücksetzen.
-	inline void ResetAverageFPS(void)
-	{
-		run_time = 0;
-		frame_count = 0;
-	}
+    /**
+     * reset average FPS counter
+     */
+    inline void ResetAverageFPS(void) {
+        run_time = 0;
+        frame_count = 0;
+    }
 
-	inline unsigned int GetRuntime(void)
-	{ 
-		return run_time;
-	}
+    inline unsigned int GetRuntime(void) {
+        return run_time;
+    }
 
-	inline unsigned int GetFrameCount(void)
-	{ 
-		return frame_count;
-	}
+    inline unsigned int GetFrameCount(void) {
+        return frame_count;
+    }
 
-	inline unsigned int GetAverageFPS(void) 
-	{
-		if(run_time == 0) 
-			return 0;
-		return (frame_count / run_time);
-	}
+    inline unsigned int GetAverageFPS(void) {
+        if(run_time == 0)
+            return 0;
+        return (frame_count / run_time);
+    }
 
-	inline unsigned int GetFPS(void) 
-	{
-		return framerate;
-	}
+    inline unsigned int GetFPS(void) {
+        return framerate;
+    }
 
-	void SetCursor(CursorType cursor = CURSOR_HAND, bool once = false);
+    void SetCursor(CursorType cursor = CURSOR_HAND, bool once = false);
 
 private:
-
-	void DrawCursor();
+    void DrawCursor();
 
 private:
-	unsigned int frames;
-	unsigned int frame_count;
-	unsigned int framerate;
-	unsigned int frame_time;
-	unsigned int run_time;
-	unsigned int last_time;
-	CursorType cursor;
-	CursorType cursor_next;
+    unsigned int frames;
+    unsigned int frame_count;
+    unsigned int framerate;
+    unsigned int frame_time;
+    unsigned int run_time;
+    unsigned int last_time;
+    CursorType cursor;
+    CursorType cursor_next;
 };
 
 #define GAMEMANAGER GameManager::inst()
